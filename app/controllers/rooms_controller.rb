@@ -9,4 +9,11 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @messages = @room.messages
   end
+
+  def new
+    @room = Room.new
+    @room.save
+    redirect_to("/")
+  end
+
 end

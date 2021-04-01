@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
-
-  # rootはRoom一覧画面にしておく
   root 'rooms#index'
+  resources :rooms
+  devise_for :users
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  # resourcesを使うとRESTfulなURLを自動生成できる
-  resources :rooms, only: %i[show]
+  post "rooms/new" => "rooms#new"
 end

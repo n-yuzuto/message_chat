@@ -1,7 +1,28 @@
-<div>
-  <ul>
-    <% @rooms.each do |room| %>
-      <li><%= link_to "ROOM#{room.id}", room_path(room) %></li>
-    <% end %>
-  </ul>
-</div>
+<% if user_signed_in? %> <!-- ユーザーがログインしているか調べる -->
+  <!-- ユーザーがログインしていた時の処理 -->
+  <h3>こんにちは, <%= current_user.email %>さん</h3>
+  <h4> メールアドレス： <%= current_user.email %> </h4>
+
+  <div>
+  　<h2>Room一覧</h2>
+    <ul>
+      <% @rooms.each do |room| %>
+        <li><%= link_to "ROOM#{room.id}", room_path(room) %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <%= form_tag("/rooms/new") do %>
+　<div class="form">
+  　<input type="submit" value="create_room">
+　</div>
+<% end %>
+
+  <%= link_to "ログアウト", destroy_user_session_path, class: 'get' %> <!-- ログアウトをする -->
+<% else %>
+  <!-- ユーザーがログインしていなかった時の処理 -->
+  <h3>こんにちは, chatアプリへようこそ</h3>
+  <h2> 現在ログインしていません </h2>
+  <%= link_to "ログイン", new_user_session_path, class: 'post' %> <!-- ログイン画面に移行する -->
+  <%= link_to "新規登録", new_user_registration_path, class: 'post' %> <!-- 新規登録画面に移行する -->
+<% end %>
